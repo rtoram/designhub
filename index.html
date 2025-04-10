@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramenta para Designers</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ferramenta para Designers</h1>
+        <div class="toolbar">
+            <button id="upload-btn">Upload de Imagem</button>
+            <button id="remove-bg-btn">Remover Fundo</button>
+            <button id="add-text-btn">Adicionar Texto</button>
+            <button id="export-btn">Exportar</button>
+            <button id="help-btn">?</button>
+        </div>
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div id="help-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Manual de Instruções</h2>
+                <p>1. Clique em "Upload de Imagem" para carregar uma imagem.</p>
+                <p>2. Use "Remover Fundo" para remover o fundo da imagem.</p>
+                <p>3. Use "Adicionar Texto" para adicionar texto à imagem.</p>
+                <p>4. Clique em "Exportar" para baixar a imagem editada.</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fabric@5.3.0/dist/fabric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
