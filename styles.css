@@ -86,3 +86,19 @@ body {
         font-size: 14px;
     }
 }
+.font-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.font-options label {
+    margin-right: 5px;
+}
+
+.font-options select,
+.font-options input {
+    margin-right: 15px;
+    padding: 5px;
+}
