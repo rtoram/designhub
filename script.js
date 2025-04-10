@@ -1,28 +1,38 @@
-// Função para remover fundo (usando BodyPix)
-document.getElementById('remove-bg-btn').addEventListener('click', async () => {
-    const net = await bodyPix.load(); // Carregar o modelo BodyPix
-    const canvasElement = canvas.getActiveObject();
-    if (!canvasElement || !(canvasElement instanceof fabric.Image)) {
-        alert('Selecione uma imagem no canvas para remover o fundo.');
-        return;
+document.getElementById('add-text-btn').addEventListener('click', () => {
+    const font = document.getElementById('font-select').value;
+    const color = document.getElementById('color-picker').value;
+    const text = new fabric.Textbox('Digite seu texto', {
+        left: 100,
+        top: 100,
+        width: 200,
+        fontSize: 20,
+        fontFamily: font,
+        fill: color,
+    });
+    canvas.add(text);
+});
+
+// Atualizar fonte e cor de um texto selecionado
+canvas.on('selection:updated', () => {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'textbox') {
+        document.getElementById('font-select').value = activeObject.fontFamily || 'Arial';
+        document.getElementById('color-picker').value = activeObject.fill || '#000000';
     }
+});
 
-    const imgElement = new Image();
-    imgElement.src = canvasElement.toDataURL();
+document.getElementById('font-select').addEventListener('change', (e) => {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'textbox') {
+        activeObject.set('fontFamily', e.target.value);
+        canvas.renderAll();
+    }
+});
 
-    imgElement.onload = async () => {
-        const segmentation = await net.segmentPerson(imgElement);
-        const maskBackground = bodyPix.toMask(segmentation, { r: 0, g: 0, b: 0, a: 0 }, { r: 255, g: 255, b: 255, a: 255 });
-        
-        const maskedCanvas = document.createElement('canvas');
-        maskedCanvas.width = imgElement.width;
-        maskedCanvas.height = imgElement.height;
-        const ctx = maskedCanvas.getContext('2d');
-        ctx.putImageData(maskBackground, 0, 0);
-        
-        fabric.Image.fromURL(maskedCanvas.toDataURL(), (img) => {
-            canvas.remove(canvasElement);
-            canvas.add(img);
-        });
-    };
+document.getElementById('color-picker').addEventListener('change', (e) => {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'textbox') {
+        activeObject.set('fill', e.target.value);
+        canvas.renderAll();
+    }
 });
